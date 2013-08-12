@@ -1,0 +1,3 @@
+[submodule "CJAudioPlayerExample/Vendor/audjustable"]
+	path = CJAudioPlayerExample/Vendor/audjustable
+	url = https://github.com/tumtumtum/audjustable.git

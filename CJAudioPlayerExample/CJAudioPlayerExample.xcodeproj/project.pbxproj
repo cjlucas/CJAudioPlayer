@@ -1,0 +1,539 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8340A48C17B32D710094B482 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8340A48B17B32D710094B482 /* Foundation.framework */; };
+		8340A48E17B32D710094B482 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8340A48D17B32D710094B482 /* CoreGraphics.framework */; };
+		8340A49017B32D710094B482 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8340A48F17B32D710094B482 /* UIKit.framework */; };
+		8340A49617B32D710094B482 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8340A49417B32D710094B482 /* InfoPlist.strings */; };
+		8340A49817B32D710094B482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A49717B32D710094B482 /* main.m */; };
+		8340A49C17B32D710094B482 /* CJAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A49B17B32D710094B482 /* CJAppDelegate.m */; };
+		8340A49F17B32D710094B482 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8340A49D17B32D710094B482 /* Main.storyboard */; };
+		8340A4A417B32D710094B482 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8340A4A317B32D710094B482 /* Images.xcassets */; };
+		8340A4AB17B32D710094B482 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8340A4AA17B32D710094B482 /* XCTest.framework */; };
+		8340A4AC17B32D710094B482 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8340A48B17B32D710094B482 /* Foundation.framework */; };
+		8340A4AD17B32D710094B482 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8340A48F17B32D710094B482 /* UIKit.framework */; };
+		8340A4C917B32E010094B482 /* CJAudioPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A4C817B32E010094B482 /* CJAudioPlayerViewController.m */; };
+		8340A4CB17B3304C0094B482 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8340A4CA17B3304C0094B482 /* MediaPlayer.framework */; };
+		8340A4CD17B34A550094B482 /* sources.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8340A4CC17B34A550094B482 /* sources.txt */; };
+		8340A4D017B34CC00094B482 /* CJQueueItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A4CF17B34CC00094B482 /* CJQueueItem.m */; };
+		8340A4D217B34CD40094B482 /* CJAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A4C217B32DCF0094B482 /* CJAudioPlayer.m */; };
+		8340A4D417B34CD40094B482 /* CJHTTPCachedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A4C417B32DCF0094B482 /* CJHTTPCachedDataSource.m */; };
+		8340A4E517B34E000094B482 /* AudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A4D817B34E000094B482 /* AudioPlayer.m */; };
+		8340A4E617B34E000094B482 /* AutoRecoveringHttpDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A4DA17B34E000094B482 /* AutoRecoveringHttpDataSource.m */; };
+		8340A4E717B34E000094B482 /* CoreFoundationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A4DC17B34E000094B482 /* CoreFoundationDataSource.m */; };
+		8340A4E817B34E000094B482 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A4DE17B34E000094B482 /* DataSource.m */; };
+		8340A4E917B34E000094B482 /* DataSourceWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A4E017B34E000094B482 /* DataSourceWrapper.m */; };
+		8340A4EA17B34E000094B482 /* HttpDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A4E217B34E000094B482 /* HttpDataSource.m */; };
+		8340A4EB17B34E000094B482 /* LocalFileDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A4E417B34E000094B482 /* LocalFileDataSource.m */; };
+		83A810D017B825CA00BC0C65 /* CJQueueTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A810CF17B825CA00BC0C65 /* CJQueueTableViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8340A4AE17B32D710094B482 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8340A48017B32D710094B482 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8340A48717B32D710094B482;
+			remoteInfo = CJAudioPlayerExample;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		8340A48817B32D710094B482 /* CJAudioPlayerExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CJAudioPlayerExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8340A48B17B32D710094B482 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		8340A48D17B32D710094B482 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		8340A48F17B32D710094B482 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		8340A49317B32D710094B482 /* CJAudioPlayerExample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CJAudioPlayerExample-Info.plist"; sourceTree = "<group>"; };
+		8340A49517B32D710094B482 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8340A49717B32D710094B482 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8340A49917B32D710094B482 /* CJAudioPlayerExample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CJAudioPlayerExample-Prefix.pch"; sourceTree = "<group>"; };
+		8340A49A17B32D710094B482 /* CJAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJAppDelegate.h; sourceTree = "<group>"; };
+		8340A49B17B32D710094B482 /* CJAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJAppDelegate.m; sourceTree = "<group>"; };
+		8340A49E17B32D710094B482 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8340A4A317B32D710094B482 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		8340A4A917B32D710094B482 /* CJAudioPlayerExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CJAudioPlayerExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8340A4AA17B32D710094B482 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		8340A4C117B32DCF0094B482 /* CJAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJAudioPlayer.h; sourceTree = "<group>"; };
+		8340A4C217B32DCF0094B482 /* CJAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJAudioPlayer.m; sourceTree = "<group>"; };
+		8340A4C317B32DCF0094B482 /* CJHTTPCachedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJHTTPCachedDataSource.h; sourceTree = "<group>"; };
+		8340A4C417B32DCF0094B482 /* CJHTTPCachedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJHTTPCachedDataSource.m; sourceTree = "<group>"; };
+		8340A4C717B32E010094B482 /* CJAudioPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJAudioPlayerViewController.h; sourceTree = "<group>"; };
+		8340A4C817B32E010094B482 /* CJAudioPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJAudioPlayerViewController.m; sourceTree = "<group>"; };
+		8340A4CA17B3304C0094B482 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		8340A4CC17B34A550094B482 /* sources.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sources.txt; sourceTree = "<group>"; };
+		8340A4CE17B34CC00094B482 /* CJQueueItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJQueueItem.h; sourceTree = "<group>"; };
+		8340A4CF17B34CC00094B482 /* CJQueueItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJQueueItem.m; sourceTree = "<group>"; };
+		8340A4D717B34E000094B482 /* AudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayer.h; sourceTree = "<group>"; };
+		8340A4D817B34E000094B482 /* AudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayer.m; sourceTree = "<group>"; };
+		8340A4D917B34E000094B482 /* AutoRecoveringHttpDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoRecoveringHttpDataSource.h; sourceTree = "<group>"; };
+		8340A4DA17B34E000094B482 /* AutoRecoveringHttpDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoRecoveringHttpDataSource.m; sourceTree = "<group>"; };
+		8340A4DB17B34E000094B482 /* CoreFoundationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreFoundationDataSource.h; sourceTree = "<group>"; };
+		8340A4DC17B34E000094B482 /* CoreFoundationDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreFoundationDataSource.m; sourceTree = "<group>"; };
+		8340A4DD17B34E000094B482 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
+		8340A4DE17B34E000094B482 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
+		8340A4DF17B34E000094B482 /* DataSourceWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSourceWrapper.h; sourceTree = "<group>"; };
+		8340A4E017B34E000094B482 /* DataSourceWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSourceWrapper.m; sourceTree = "<group>"; };
+		8340A4E117B34E000094B482 /* HttpDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpDataSource.h; sourceTree = "<group>"; };
+		8340A4E217B34E000094B482 /* HttpDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpDataSource.m; sourceTree = "<group>"; };
+		8340A4E317B34E000094B482 /* LocalFileDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalFileDataSource.h; sourceTree = "<group>"; };
+		8340A4E417B34E000094B482 /* LocalFileDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalFileDataSource.m; sourceTree = "<group>"; };
+		83A810CE17B825CA00BC0C65 /* CJQueueTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJQueueTableViewController.h; sourceTree = "<group>"; };
+		83A810CF17B825CA00BC0C65 /* CJQueueTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJQueueTableViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8340A48517B32D710094B482 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8340A4CB17B3304C0094B482 /* MediaPlayer.framework in Frameworks */,
+				8340A48E17B32D710094B482 /* CoreGraphics.framework in Frameworks */,
+				8340A49017B32D710094B482 /* UIKit.framework in Frameworks */,
+				8340A48C17B32D710094B482 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8340A4A617B32D710094B482 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8340A4AB17B32D710094B482 /* XCTest.framework in Frameworks */,
+				8340A4AD17B32D710094B482 /* UIKit.framework in Frameworks */,
+				8340A4AC17B32D710094B482 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8340A47F17B32D710094B482 = {
+			isa = PBXGroup;
+			children = (
+				8340A49117B32D710094B482 /* CJAudioPlayerExample */,
+				8340A4D517B34DC70094B482 /* Vendor */,
+				8340A48A17B32D710094B482 /* Frameworks */,
+				8340A48917B32D710094B482 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8340A48917B32D710094B482 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8340A48817B32D710094B482 /* CJAudioPlayerExample.app */,
+				8340A4A917B32D710094B482 /* CJAudioPlayerExampleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8340A48A17B32D710094B482 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8340A4CA17B3304C0094B482 /* MediaPlayer.framework */,
+				8340A48B17B32D710094B482 /* Foundation.framework */,
+				8340A48D17B32D710094B482 /* CoreGraphics.framework */,
+				8340A48F17B32D710094B482 /* UIKit.framework */,
+				8340A4AA17B32D710094B482 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8340A49117B32D710094B482 /* CJAudioPlayerExample */ = {
+			isa = PBXGroup;
+			children = (
+				8340A4C017B32DCF0094B482 /* Classes */,
+				8340A49A17B32D710094B482 /* CJAppDelegate.h */,
+				8340A49B17B32D710094B482 /* CJAppDelegate.m */,
+				8340A49D17B32D710094B482 /* Main.storyboard */,
+				8340A4C717B32E010094B482 /* CJAudioPlayerViewController.h */,
+				8340A4C817B32E010094B482 /* CJAudioPlayerViewController.m */,
+				8340A4CE17B34CC00094B482 /* CJQueueItem.h */,
+				8340A4CF17B34CC00094B482 /* CJQueueItem.m */,
+				8340A4A317B32D710094B482 /* Images.xcassets */,
+				8340A49217B32D710094B482 /* Supporting Files */,
+			);
+			path = CJAudioPlayerExample;
+			sourceTree = "<group>";
+		};
+		8340A49217B32D710094B482 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8340A49317B32D710094B482 /* CJAudioPlayerExample-Info.plist */,
+				8340A49417B32D710094B482 /* InfoPlist.strings */,
+				8340A49717B32D710094B482 /* main.m */,
+				8340A49917B32D710094B482 /* CJAudioPlayerExample-Prefix.pch */,
+				8340A4CC17B34A550094B482 /* sources.txt */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8340A4C017B32DCF0094B482 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				8340A4C117B32DCF0094B482 /* CJAudioPlayer.h */,
+				8340A4C217B32DCF0094B482 /* CJAudioPlayer.m */,
+				83A810CE17B825CA00BC0C65 /* CJQueueTableViewController.h */,
+				83A810CF17B825CA00BC0C65 /* CJQueueTableViewController.m */,
+				8340A4C317B32DCF0094B482 /* CJHTTPCachedDataSource.h */,
+				8340A4C417B32DCF0094B482 /* CJHTTPCachedDataSource.m */,
+			);
+			name = Classes;
+			path = ../../Classes;
+			sourceTree = "<group>";
+		};
+		8340A4D517B34DC70094B482 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				8340A4D617B34E000094B482 /* AudioPlayer */,
+			);
+			name = Vendor;
+			path = CJAudioPlayerExample;
+			sourceTree = "<group>";
+		};
+		8340A4D617B34E000094B482 /* AudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				8340A4D717B34E000094B482 /* AudioPlayer.h */,
+				8340A4D817B34E000094B482 /* AudioPlayer.m */,
+				8340A4D917B34E000094B482 /* AutoRecoveringHttpDataSource.h */,
+				8340A4DA17B34E000094B482 /* AutoRecoveringHttpDataSource.m */,
+				8340A4DB17B34E000094B482 /* CoreFoundationDataSource.h */,
+				8340A4DC17B34E000094B482 /* CoreFoundationDataSource.m */,
+				8340A4DD17B34E000094B482 /* DataSource.h */,
+				8340A4DE17B34E000094B482 /* DataSource.m */,
+				8340A4DF17B34E000094B482 /* DataSourceWrapper.h */,
+				8340A4E017B34E000094B482 /* DataSourceWrapper.m */,
+				8340A4E117B34E000094B482 /* HttpDataSource.h */,
+				8340A4E217B34E000094B482 /* HttpDataSource.m */,
+				8340A4E317B34E000094B482 /* LocalFileDataSource.h */,
+				8340A4E417B34E000094B482 /* LocalFileDataSource.m */,
+			);
+			name = AudioPlayer;
+			path = Vendor/audjustable/Audjustable/Classes/AudioPlayer;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8340A48717B32D710094B482 /* CJAudioPlayerExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8340A4BA17B32D710094B482 /* Build configuration list for PBXNativeTarget "CJAudioPlayerExample" */;
+			buildPhases = (
+				8340A48417B32D710094B482 /* Sources */,
+				8340A48517B32D710094B482 /* Frameworks */,
+				8340A48617B32D710094B482 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CJAudioPlayerExample;
+			productName = CJAudioPlayerExample;
+			productReference = 8340A48817B32D710094B482 /* CJAudioPlayerExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8340A4A817B32D710094B482 /* CJAudioPlayerExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8340A4BD17B32D710094B482 /* Build configuration list for PBXNativeTarget "CJAudioPlayerExampleTests" */;
+			buildPhases = (
+				8340A4A517B32D710094B482 /* Sources */,
+				8340A4A617B32D710094B482 /* Frameworks */,
+				8340A4A717B32D710094B482 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8340A4AF17B32D710094B482 /* PBXTargetDependency */,
+			);
+			name = CJAudioPlayerExampleTests;
+			productName = CJAudioPlayerExampleTests;
+			productReference = 8340A4A917B32D710094B482 /* CJAudioPlayerExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8340A48017B32D710094B482 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = CJ;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Chris Lucas";
+				TargetAttributes = {
+					8340A4A817B32D710094B482 = {
+						TestTargetID = 8340A48717B32D710094B482;
+					};
+				};
+			};
+			buildConfigurationList = 8340A48317B32D710094B482 /* Build configuration list for PBXProject "CJAudioPlayerExample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8340A47F17B32D710094B482;
+			productRefGroup = 8340A48917B32D710094B482 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8340A48717B32D710094B482 /* CJAudioPlayerExample */,
+				8340A4A817B32D710094B482 /* CJAudioPlayerExampleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8340A48617B32D710094B482 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8340A4A417B32D710094B482 /* Images.xcassets in Resources */,
+				8340A4CD17B34A550094B482 /* sources.txt in Resources */,
+				8340A49617B32D710094B482 /* InfoPlist.strings in Resources */,
+				8340A49F17B32D710094B482 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8340A4A717B32D710094B482 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8340A48417B32D710094B482 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8340A4E517B34E000094B482 /* AudioPlayer.m in Sources */,
+				8340A4EA17B34E000094B482 /* HttpDataSource.m in Sources */,
+				83A810D017B825CA00BC0C65 /* CJQueueTableViewController.m in Sources */,
+				8340A4EB17B34E000094B482 /* LocalFileDataSource.m in Sources */,
+				8340A4E817B34E000094B482 /* DataSource.m in Sources */,
+				8340A4D217B34CD40094B482 /* CJAudioPlayer.m in Sources */,
+				8340A4D417B34CD40094B482 /* CJHTTPCachedDataSource.m in Sources */,
+				8340A4C917B32E010094B482 /* CJAudioPlayerViewController.m in Sources */,
+				8340A4E917B34E000094B482 /* DataSourceWrapper.m in Sources */,
+				8340A4D017B34CC00094B482 /* CJQueueItem.m in Sources */,
+				8340A4E717B34E000094B482 /* CoreFoundationDataSource.m in Sources */,
+				8340A49817B32D710094B482 /* main.m in Sources */,
+				8340A49C17B32D710094B482 /* CJAppDelegate.m in Sources */,
+				8340A4E617B34E000094B482 /* AutoRecoveringHttpDataSource.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8340A4A517B32D710094B482 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8340A4AF17B32D710094B482 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8340A48717B32D710094B482 /* CJAudioPlayerExample */;
+			targetProxy = 8340A4AE17B32D710094B482 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		8340A49417B32D710094B482 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8340A49517B32D710094B482 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		8340A49D17B32D710094B482 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8340A49E17B32D710094B482 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8340A4B817B32D710094B482 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		8340A4B917B32D710094B482 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8340A4BB17B32D710094B482 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CJAudioPlayerExample/CJAudioPlayerExample-Prefix.pch";
+				INFOPLIST_FILE = "CJAudioPlayerExample/CJAudioPlayerExample-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		8340A4BC17B32D710094B482 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CJAudioPlayerExample/CJAudioPlayerExample-Prefix.pch";
+				INFOPLIST_FILE = "CJAudioPlayerExample/CJAudioPlayerExample-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		8340A4BE17B32D710094B482 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CJAudioPlayerExample.app/CJAudioPlayerExample";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CJAudioPlayerExample/CJAudioPlayerExample-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "CJAudioPlayerExampleTests/CJAudioPlayerExampleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		8340A4BF17B32D710094B482 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CJAudioPlayerExample.app/CJAudioPlayerExample";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CJAudioPlayerExample/CJAudioPlayerExample-Prefix.pch";
+				INFOPLIST_FILE = "CJAudioPlayerExampleTests/CJAudioPlayerExampleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8340A48317B32D710094B482 /* Build configuration list for PBXProject "CJAudioPlayerExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8340A4B817B32D710094B482 /* Debug */,
+				8340A4B917B32D710094B482 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8340A4BA17B32D710094B482 /* Build configuration list for PBXNativeTarget "CJAudioPlayerExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8340A4BB17B32D710094B482 /* Debug */,
+				8340A4BC17B32D710094B482 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8340A4BD17B32D710094B482 /* Build configuration list for PBXNativeTarget "CJAudioPlayerExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8340A4BE17B32D710094B482 /* Debug */,
+				8340A4BF17B32D710094B482 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8340A48017B32D710094B482 /* Project object */;
+}
