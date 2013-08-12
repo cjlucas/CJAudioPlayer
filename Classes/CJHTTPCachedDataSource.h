@@ -8,7 +8,7 @@
 
 #import "DataSource.h"
 
-#define CJHTTPCachedDataSourceDebug 0
+#define CJHTTPCachedDataSourceDebug 1
 
 @class CJHTTPCachedDataSource;
 
@@ -25,21 +25,24 @@
     NSMutableData *_audioBuffer;
     NSMutableData *_cacheBuffer;
 
-    // These ranges reflect the current position of the cache relative to the full file
+    // These ranges reflect the current position of the buffer relative to the full cache file
     NSRange _currentAudioBufferRange;
     NSRange _currentCacheBufferRange;
 
-    unsigned long long _cacheFileSize;
-
-    BOOL _hasSeeked;
     dispatch_queue_t _bufferPrimerQueue;
 
-    NSUInteger _totalBytesDownloaded; // don't rely on NSURLSessionDataTask, countOfBytesReceived tends to get ahead of the didReceiveData calls
+    BOOL _hasSeeked;
+    BOOL _dataSourceEOF;
     BOOL _usingTemporaryCacheFile;
+
+    NSUInteger _totalBytesDownloaded; // don't rely on NSURLSessionDataTask, countOfBytesReceived tends to get ahead of the didReceiveData calls
+    NSUInteger _finalCacheSize; // set when either file is already fully cached during initialization or when download is complete
+
     AudioFileTypeID _fileTypeID;
 
 #if CJHTTPCachedDataSourceDebug
     // log cache hits
+    int _bufferCount;
     int _writeCount;
     int _readCount;
 #endif

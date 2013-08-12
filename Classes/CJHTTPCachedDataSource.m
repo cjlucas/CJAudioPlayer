@@ -14,9 +14,8 @@
 #define CJHTTPCachedDataSourceLog(fmt, ...) do { if (CJHTTPCachedDataSourceDebug) { CJLog(fmt, __VA_ARGS__); } } while(0)
 
 #define CJHTTPCachedDataSourceMaxAudioBufferSize (512 * 1024) // 512 KB
-//#define CJHTTPCachedDataSourceMaxAudioBufferSize (128 * 1024) // 512 KB
 #define CJHTTPCachedDataSourceMaxCacheBufferSize (1 * 1024 * 1024) // 1 MB
-//#define CJHTTPCachedDataSourceMaxCacheBufferSize (10 * 1024 * 1024) // 1 MB
+#define CJHTTPCachedDataSourceLowAudioBufferThreshold (16 * 1024) // 16 KB (same as AudioPlayerDefaultReadBufferSize)
 
 #import "CJHTTPCachedDataSource.h"
 
@@ -79,7 +78,7 @@
         if (attributes) {
             // if the cache file exists, we can assume it's complete.
             _fullyCached = YES;
-            _length = [attributes fileSize];
+            _finalCacheSize = [attributes fileSize];
         }
         else {
             _fullyCached = NO;
@@ -101,13 +100,15 @@
     _fileTypeID = 0;
     _currentAudioBufferRange = NSMakeRange(0, 0);
     _currentCacheBufferRange  = NSMakeRange(0, 0);
-    _bufferPrimerQueue = dispatch_queue_create("net.cjlucas.audioplayer.datasource.bufferprimer", DISPATCH_QUEUE_SERIAL);
+    _bufferPrimerQueue = dispatch_queue_create("com.chrisjlucas.cjaudioplayer.datasource.bufferprimer", DISPATCH_QUEUE_SERIAL);
 
     _audioBuffer = [[NSMutableData alloc] initWithCapacity:CJHTTPCachedDataSourceMaxAudioBufferSize];
     _cacheBuffer = [[NSMutableData alloc] initWithCapacity:CJHTTPCachedDataSourceMaxCacheBufferSize];
 
     _hasSeeked = NO;
+    _dataSourceEOF = NO;
     _totalBytesDownloaded = 0;
+    _finalCacheSize = 0;
 }
 
 - (void)teardown
@@ -138,7 +139,13 @@
 - (void)primeAudioBuffer
 {
     dispatch_async(_bufferPrimerQueue, ^{
-        if (_currentAudioBufferRange.length < (CJHTTPCachedDataSourceMaxAudioBufferSize / 4)) { // use a guard to prevent unnecessary loads from disk
+        // no need to go further if eof has already been called
+        if (_dataSourceEOF) {
+            return;
+        }
+
+        // refill audio buffer if it's below threshold
+        if (_currentAudioBufferRange.length < CJHTTPCachedDataSourceLowAudioBufferThreshold) {
             [self fillAudioBufferFromCache];
         }
 
@@ -150,12 +157,15 @@
 
         if (_hasBytesAvailable) {
             [self.delegate dataSourceDataAvailable:self];
-        } else if (_currentAudioBufferRange.location == _length) {
-#if CJHTTPCachedDataSourceDebug
+        } else if (_fullyCached) {
             CJHTTPCachedDataSourceLog(@"calling EOF", nil);
             CJHTTPCachedDataSourceLog(@"final write count:  %d", _writeCount);
             CJHTTPCachedDataSourceLog(@"final read count:   %d", _readCount);
-#endif
+            CJHTTPCachedDataSourceLog(@"final buffer count: %d", _bufferCount);
+            CJHTTPCachedDataSourceLog(@"final audio buffer range: %@", NSStringFromRange(_currentAudioBufferRange));
+            CJHTTPCachedDataSourceLog(@"final cache buffer range: %@", NSStringFromRange(_currentCacheBufferRange));
+
+            _dataSourceEOF = YES;
             [self.delegate dataSourceEof:self];
         }
     });
@@ -164,24 +174,36 @@
 - (void)fillAudioBufferFromCache
 {
     @synchronized(self) {
-        // write cache buffer to disk first so we don't have to deal with figuring out where the data is
-        if (_currentCacheBufferRange.length > 0) {
-            [self writeDataToFile:_cacheBuffer purgeCache:YES];
-        }
-
-        CJHTTPCachedDataSourceLog(@"fillAudioBufferFromCache (before read)", nil);
-        CJHTTPCachedDataSourceLog(@"audio buffer location: %d", _currentAudioBufferRange.location);
-        CJHTTPCachedDataSourceLog(@"audio buffer length: %d", _audioBuffer.length);
-        CJHTTPCachedDataSourceLog(@"cache buffer length: %d", _cacheBuffer.length);
+//        CJHTTPCachedDataSourceLog(@"%@", NSStringFromRange(_currentAudioBufferRange));
+//        CJHTTPCachedDataSourceLog(@"%@", NSStringFromRange(_currentCacheBufferRange));
 
         _audioBuffer = [[NSMutableData alloc] initWithCapacity:CJHTTPCachedDataSourceMaxAudioBufferSize];
-        [_audioBuffer appendData:[self readDataFromFileAtOffset:_currentAudioBufferRange.location numBytes:CJHTTPCachedDataSourceMaxAudioBufferSize]];
+
+        NSInteger locationDiff = _currentAudioBufferRange.location - _currentCacheBufferRange.location;
+        if (locationDiff >= 0 && _currentCacheBufferRange.length > 0) {
+#if CJHTTPCachedDataSourceDebug
+            _bufferCount++;
+#endif
+            NSUInteger endRange = MIN(_currentCacheBufferRange.length - locationDiff, CJHTTPCachedDataSourceMaxAudioBufferSize);
+            [_audioBuffer appendData:[_cacheBuffer subdataWithRange:NSMakeRange(locationDiff, endRange)]];
+        } else {
+            if (_currentCacheBufferRange.length > 0) {
+                [self writeDataToFile:_cacheBuffer purgeCache:YES];
+            }
+            [_audioBuffer appendData:[self readDataFromFileAtOffset:_currentAudioBufferRange.location numBytes:CJHTTPCachedDataSourceMaxAudioBufferSize]];
+        }
+
+//        CJHTTPCachedDataSourceLog(@"fillAudioBufferFromCache (before read)", nil);
+//        CJHTTPCachedDataSourceLog(@"audio buffer location: %d", _currentAudioBufferRange.location);
+//        CJHTTPCachedDataSourceLog(@"audio buffer length: %d", _audioBuffer.length);
+//        CJHTTPCachedDataSourceLog(@"cache buffer length: %d", _cacheBuffer.length);
+
         _currentAudioBufferRange.length = _audioBuffer.length;
 
-        CJHTTPCachedDataSourceLog(@"fillAudioBufferFromCache (after read)", nil);
-        CJHTTPCachedDataSourceLog(@"audio buffer location: %d", _currentAudioBufferRange.location);
-        CJHTTPCachedDataSourceLog(@"audio buffer length: %d", _audioBuffer.length);
-        CJHTTPCachedDataSourceLog(@"cache buffer length: %d", _cacheBuffer.length);
+//        CJHTTPCachedDataSourceLog(@"fillAudioBufferFromCache (after read)", nil);
+//        CJHTTPCachedDataSourceLog(@"audio buffer location: %d", _currentAudioBufferRange.location);
+//        CJHTTPCachedDataSourceLog(@"audio buffer length: %d", _audioBuffer.length);
+//        CJHTTPCachedDataSourceLog(@"cache buffer length: %d", _cacheBuffer.length);
     }
 }
 
@@ -189,8 +211,8 @@
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         @synchronized(self) {
-            CJHTTPCachedDataSourceLog(@"handleReceivedData (count: %d)", data.length);
-            CJHTTPCachedDataSourceLog(@"currentCacheBufferRange length: %d", _currentCacheBufferRange.length);
+//            CJHTTPCachedDataSourceLog(@"handleReceivedData (count: %d)", data.length);
+//            CJHTTPCachedDataSourceLog(@"_currentCacheBufferRange: %@", NSStringFromRange(_currentCacheBufferRange));
 
             if (_fullyCached)
                 return;
@@ -217,7 +239,6 @@
         CJHTTPCachedDataSourceLog(@"handleDownloadCompletion", nil);
         [self writeDataToFile:_cacheBuffer purgeCache:YES];
 
-        _fullyCached = YES;
         [self primeAudioBuffer];
     }
 }
@@ -227,8 +248,10 @@
     // remove written bytes
     [_cacheBuffer replaceBytesInRange:NSMakeRange(0, _cacheBuffer.length) withBytes:NULL length:0];
 
-    // reset length to zero to reflect empty cache buffer
-    _currentCacheBufferRange.length = 0;
+    // shift cache buffer location
+    NSUInteger newLocation = _currentCacheBufferRange.location + _currentCacheBufferRange.length;
+    // reset range to reflect empty cache buffer
+    _currentCacheBufferRange = NSMakeRange(newLocation, 0);
 }
 
 #pragma mark - File Cache Methods
@@ -274,6 +297,10 @@
 
     if (purgeCache)
         [self purgeCache];
+
+    if (_finalCacheSize > 0 && _currentCacheBufferRange.location == _finalCacheSize) {
+        _fullyCached = YES;
+    }
 }
 
 - (NSData *)readDataFromFileAtOffset:(NSUInteger)offset numBytes:(NSUInteger)numBytes
@@ -412,12 +439,12 @@
     [self setFileTypeIDWithMIMEType:response.MIMEType];
     NSURLSessionResponseDisposition disposition = NSURLSessionResponseAllow;
 
-    if (response.expectedContentLength == _length) {
+    if (response.expectedContentLength == _finalCacheSize) {
         CJHTTPCachedDataSourceLog(@"expected content length matches size of cache file", nil);
         _fullyCached = YES;
         [self primeAudioBuffer];
         disposition = NSURLSessionResponseCancel;
-    } else if (_cacheFileSize > 0) {
+    } else if (_finalCacheSize > 0) {
         // if file has been changed server-side, we need to invalidate the current cache and redownload
         [self invalidateCacheFile];
         [self createCacheFile];
@@ -453,6 +480,8 @@
         [self.delegate dataSourceErrorOccured:self];
         [self teardown];
     }
+
+    _finalCacheSize = task.countOfBytesReceived;
 
     [self handleDownloadCompletion];
 
