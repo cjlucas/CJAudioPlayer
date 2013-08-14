@@ -334,6 +334,10 @@
 
 #pragma mark - DataSource methods
 
+- (void)close
+{
+    [self teardown];
+}
 - (int)readIntoBuffer:(UInt8 *)buffer withSize:(int)size
 {
     @synchronized(self) {
@@ -351,10 +355,7 @@
         _currentAudioBufferRange.location += bytesRead;
         _currentAudioBufferRange.length -= bytesRead;
 
-        CJHTTPCachedDataSourceLog(@"current audio buffer range location: %d", _currentAudioBufferRange.location);
-
-        if (_currentAudioBufferRange.length == 0)
-            _hasBytesAvailable = NO;
+        CJHTTPCachedDataSourceLog(@"currentAudioBufferRange: %@", NSStringFromRange(_currentAudioBufferRange));
 
         if (_fullyCached) {
             [self primeAudioBuffer];
@@ -405,29 +406,16 @@
     // otherwise, we have to make a new http request with the range selected and invalidate the current cache
 }
 
-- (void)setDelegate:(id<DataSourceDelegate>)delegate
-{
-    [super setDelegate:delegate];
-
-    if (delegate == nil) {
-        [self teardown];
-    }
-}
-
-- (id <DataSourceDelegate>)delegate
-{
-    id <DataSourceDelegate> __delegate = [super delegate];
-
-    if (!__delegate) {
-        CJHTTPCachedDataSourceLog(@"WARNING: delegate is nil", nil);
-    }
-
-    return __delegate;
-}
-
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"%@ { %@ }", [super description], _httpURL];
+}
+
+- (BOOL)registerForEvents:(NSRunLoop *)runLoop
+{
+    CJHTTPCachedDataSourceLog(@"registerForEvents", nil);
+    [self startBuffering];
+    return NO;
 }
 
 #pragma mark - NSURLSessionDataDelegate methods

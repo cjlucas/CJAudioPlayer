@@ -430,13 +430,12 @@
     // if this throws an exception, our logic is screwed up somewhere
     assert(_currentDataSource.queueID == queueItemId);
 
-    [_currentDataSource startBuffering];
-
     _currentQueuePosition = [_queue indexOfObject:item];
     CJAudioPlayerLog(@"set currentQueuePosition to %d", _currentQueuePosition);
 
-    if (_queuedDataSource == nil)
+    if (_queuedDataSource == nil) {
         [self queueItem:[self getNextItem]];
+    }
 
     if ([self.delegate respondsToSelector:@selector(audioPlayer:didStartPlayingItem:isFullyCached:)])
         [self.delegate audioPlayer:self didStartPlayingItem:item isFullyCached:_currentDataSource.isFullyCached];
@@ -473,11 +472,7 @@
 
 - (void)dataSourceDidFinishDownloading:(CJHTTPCachedDataSource *)dataSource
 {
-    CJAudioPlayerLog(@"dataSourceDidFinishDownloading", nil);
-
-    if (dataSource == _currentDataSource) {
-        [_queuedDataSource startBuffering];
-    }
+    CJAudioPlayerLog(@"dataSourceDidFinishDownloading: %@", dataSource);
 }
 
 - (void)dataSourceWillStartReadingFromCache:(CJHTTPCachedDataSource *)dataSource
