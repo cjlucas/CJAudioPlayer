@@ -18,6 +18,151 @@
 
 #define CJAudioPlayerLog(fmt, ...) do { if (CJAudioPlayerDebug) { CJLog(fmt, __VA_ARGS__); } } while(0)
 
+NSString * NSStringFromAudioPlayerState(AudioPlayerState state)
+{
+    NSString *str;
+
+    switch (state) {
+        case AudioPlayerStateReady:
+            str = @"AudioPlayerStateReady";
+            break;
+        case AudioPlayerStateRunning:
+            str = @"AudioPlayerStateRunning";
+            break;
+        case AudioPlayerStatePlaying:
+            str = @"AudioPlayerStatePlaying";
+            break;
+        case AudioPlayerStatePaused:
+            str = @"AudioPlayerStatePaused";
+            break;
+        case AudioPlayerStateStopped:
+            str = @"AudioPlayerStateStopped";
+            break;
+        case AudioPlayerStateError:
+            str = @"AudioPlayerStateError";
+            break;
+        case AudioPlayerStateDisposed:
+            str = @"AudioPlayerStateDisposed";
+            break;
+        default:
+            break;
+    }
+
+    return str;
+}
+
+NSString * NSStringFromAudioPlayerInternalState(AudioPlayerInternalState state)
+{
+    NSString *str;
+
+    switch (state) {
+        case AudioPlayerInternalStateInitialised:
+            str = @"AudioPlayerInternalStateInitialised";
+            break;
+        case AudioPlayerInternalStateRunning:
+            str = @"AudioPlayerInternalStateRunning";
+            break;
+        case AudioPlayerInternalStatePlaying:
+            str = @"AudioPlayerInternalStatePlaying";
+            break;
+        case AudioPlayerInternalStateStartingThread:
+            str = @"AudioPlayerInternalStateStartingThread";
+            break;
+        case AudioPlayerInternalStateWaitingForData:
+            str = @"AudioPlayerInternalStateWaitingForData";
+            break;
+        case AudioPlayerInternalStateWaitingForQueueToStart:
+            str = @"AudioPlayerInternalStateWaitingForQueueToStart";
+            break;
+        case AudioPlayerInternalStatePaused:
+            str = @"AudioPlayerInternalStatePaused";
+            break;
+        case AudioPlayerInternalStateRebuffering:
+            str = @"AudioPlayerInternalStateRebuffering";
+            break;
+        case AudioPlayerInternalStateStopping:
+            str = @"AudioPlayerInternalStateStopping";
+            break;
+        case AudioPlayerInternalStateStopped:
+            str = @"AudioPlayerInternalStateStopped";
+            break;
+        case AudioPlayerInternalStateDisposed:
+            str = @"AudioPlayerInternalStateDisposed";
+            break;
+        case AudioPlayerInternalStateError:
+            str = @"AudioPlayerInternalStateError";
+            break;
+        default:
+            break;
+    }
+
+    return str;
+}
+
+NSString * NSStringFromAudioPlayerStopReason(AudioPlayerStopReason reason)
+{
+    NSString *str;
+
+    switch (reason) {
+        case AudioPlayerStopReasonNoStop:
+            str = @"AudioPlayerStopReasonNoStop";
+            break;
+        case AudioPlayerStopReasonEof:
+            str = @"AudioPlayerStopReasonEof";
+            break;
+        case AudioPlayerStopReasonUserAction:
+            str = @"AudioPlayerStopReasonUserAction";
+            break;
+        case AudioPlayerStopReasonUserActionFlushStop:
+            str = @"AudioPlayerStopReasonUserActionFlushStop";
+            break;
+        default:
+            break;
+    }
+
+    return str;
+}
+
+NSString * NSStringFromAudioPlayerErrorCode(AudioPlayerErrorCode code)
+{
+    NSString *str;
+
+    switch (code) {
+        case AudioPlayerErrorNone:
+            str = @"AudioPlayerErrorNone";
+            break;
+        case AudioPlayerErrorDataSource:
+            str = @"AudioPlayerErrorDataSource";
+            break;
+        case AudioPlayerErrorStreamParseBytesFailed:
+            str = @"AudioPlayerErrorStreamParseBytesFailed";
+            break;
+        case AudioPlayerErrorDataNotFound:
+            str = @"AudioPlayerErrorDataNotFound";
+            break;
+        case AudioPlayerErrorQueueStartFailed:
+            str = @"AudioPlayerErrorQueueStartFailed";
+            break;
+        case AudioPlayerErrorQueuePauseFailed:
+            str = @"AudioPlayerErrorQueuePauseFailed";
+            break;
+        case AudioPlayerErrorUnknownBuffer:
+            str = @"AudioPlayerErrorUnknownBuffer";
+            break;
+        case AudioPlayerErrorQueueStopFailed:
+            str = @"AudioPlayerErrorQueueStopFailed";
+            break;
+        case AudioPlayerErrorOther:
+            str = @"AudioPlayerErrorOther";
+            break;
+        default:
+            break;
+    }
+
+    return str;
+}
+
+
 @interface CJAudioPlayer ()
 
 - (void)setup;
@@ -257,7 +402,6 @@
     [self flushStop];
 
     CJHTTPCachedDataSource *dataSource = [self dataSourceForItem:item];
-    CJAudioPlayerLog(@"Test", nil);
     CJAudioPlayerLog(@"setting item: %@ with queueID: %@", item, [item queueID]);
     CJAudioPlayerLog(@"%@", dataSource);
     [_player setDataSource:dataSource withQueueItemId:[item queueID]];
@@ -396,19 +540,19 @@
 
 -(void) audioPlayer:(AudioPlayer*)audioPlayer stateChanged:(AudioPlayerState)state
 {
-    CJAudioPlayerLog(@"stateChanged: %d", state);
+    CJAudioPlayerLog(@"stateChanged: %@", NSStringFromAudioPlayerState(state));
 }
 
 - (void)audioPlayer:(AudioPlayer *)audioPlayer internalStateChanged:(AudioPlayerInternalState)state
 {
-    CJAudioPlayerLog(@"internalStateChanged: %d", state);
+    CJAudioPlayerLog(@"internalStateChanged: %@", NSStringFromAudioPlayerInternalState(state));
 
     self.buffering = state == AudioPlayerInternalStateWaitingForData || state == AudioPlayerInternalStateRebuffering;
 }
 
 -(void) audioPlayer:(AudioPlayer*)audioPlayer didEncounterError:(AudioPlayerErrorCode)errorCode
 {
-    CJAudioPlayerLog(@"didEncounterError: %d", errorCode);
+    CJAudioPlayerLog(@"didEncounterError: %@", NSStringFromAudioPlayerErrorCode(errorCode));
     [self playNext];
 }
 
@@ -429,6 +573,7 @@
 
     // if this throws an exception, our logic is screwed up somewhere
     assert(_currentDataSource.queueID == queueItemId);
+    assert(_currentDataSource.delegate);
 
     _currentQueuePosition = [_queue indexOfObject:item];
     CJAudioPlayerLog(@"set currentQueuePosition to %d", _currentQueuePosition);
@@ -450,15 +595,11 @@
 {
     CJAudioPlayerLog(@"didFinishPlayingQueueItemId: %@", queueItemId);
     CJAudioPlayerLog(@"currently playing queue item id %@", audioPlayer.currentlyPlayingQueueItemId);
-    CJAudioPlayerLog(@"stopReason: %d", stopReason); // TODO: figure out why the stop reason isnt EOF
+    CJAudioPlayerLog(@"stopReason: %@", NSStringFromAudioPlayerStopReason(stopReason)); // TODO: figure out why the stop reason isnt EOF
 
     if (_currentDataSource.queueID == queueItemId) {
         [_currentDataSource teardown];
         _currentDataSource = nil;
-    }
-
-    if (stopReason == AudioPlayerStopReasonUserActionFlushStop) {
-        CJAudioPlayerLog(@"stopReason was a flush stop", nil);
     }
 
     if (![self hasNextItem]) {
@@ -477,7 +618,7 @@
 
 - (void)dataSourceWillStartReadingFromCache:(CJHTTPCachedDataSource *)dataSource
 {
-    CJAudioPlayerLog(@"dataSourceWillStartReadingFromCache", nil);
+    CJAudioPlayerLog(@"dataSourceWillStartReadingFromCache: %@", dataSource);
 }
 
 - (void)dataSource:(CJHTTPCachedDataSource *)dataSource didUpdateDownloadProgressWithBytesDownloaded:(NSUInteger)bytesDownloaded bytesExpected:(NSUInteger)bytesExpected
