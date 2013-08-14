@@ -54,7 +54,6 @@
 @synthesize cacheURL = _cacheURL;
 @synthesize queueID = _queueID;
 @synthesize length = _length;
-@synthesize hasBytesAvailable = _hasBytesAvailable;
 @synthesize fullyCached = _fullyCached;
 
 #pragma mark - Lifecycle
@@ -128,6 +127,8 @@
 - (void)startBuffering
 {
     CJHTTPCachedDataSourceLog(@"is fully cached? %@", _fullyCached ? @"YES" : @"NO");
+//    CJHTTPCachedDataSourceLog(@"final audio buffer range: %@", NSStringFromRange(_currentAudioBufferRange));
+//    CJHTTPCachedDataSourceLog(@"final cache buffer range: %@", NSStringFromRange(_currentCacheBufferRange));
 
     if (_fullyCached) {
         [self primeAudioBuffer];
@@ -144,24 +145,28 @@
             return;
         }
 
-        // refill audio buffer if it's below threshold
-        if (_currentAudioBufferRange.length < CJHTTPCachedDataSourceLowAudioBufferThreshold) {
+        // only refill buffer if it's empty
+        if (self.hasBytesAvailable) {
+            [self.delegate dataSourceDataAvailable:self];
+            return;
+        } else {
             [self fillAudioBufferFromCache];
         }
 
         if (_currentAudioBufferRange.length > CJHTTPCachedDataSourceMaxAudioBufferSize)
             CJHTTPCachedDataSourceLog(@"WARNING: currentAudioBufferRange length is greater than max audio buffer size: %d", _currentAudioBufferRange.length);
 
-        _hasBytesAvailable = _currentAudioBufferRange.length > 0;
-        CJHTTPCachedDataSourceLog(@"hasBytesAvailable? %@", _hasBytesAvailable ? @"YES" : @"NO");
+        CJHTTPCachedDataSourceLog(@"hasBytesAvailable? %@", self.hasBytesAvailable ? @"YES" : @"NO");
 
-        if (_hasBytesAvailable) {
+        if (self.hasBytesAvailable) {
             [self.delegate dataSourceDataAvailable:self];
         } else if (_fullyCached) {
             CJHTTPCachedDataSourceLog(@"calling EOF", nil);
+#if CJHTTPCachedDataSourceDebug
             CJHTTPCachedDataSourceLog(@"final write count:  %d", _writeCount);
             CJHTTPCachedDataSourceLog(@"final read count:   %d", _readCount);
             CJHTTPCachedDataSourceLog(@"final buffer count: %d", _bufferCount);
+#endif
             CJHTTPCachedDataSourceLog(@"final audio buffer range: %@", NSStringFromRange(_currentAudioBufferRange));
             CJHTTPCachedDataSourceLog(@"final cache buffer range: %@", NSStringFromRange(_currentCacheBufferRange));
 
@@ -338,10 +343,16 @@
 {
     [self teardown];
 }
+
+- (BOOL)hasBytesAvailable
+{
+    return _currentAudioBufferRange.length > 0;
+}
+
 - (int)readIntoBuffer:(UInt8 *)buffer withSize:(int)size
 {
     @synchronized(self) {
-        CJHTTPCachedDataSourceLog(@"readInfoBuffer size: %d", size);
+        CJHTTPCachedDataSourceLog(@"readInfoBuffer withSize: %d", size);
 
         // read bytes from internal buffer into audio player buffer
         [_audioBuffer getBytes:buffer length:size];
