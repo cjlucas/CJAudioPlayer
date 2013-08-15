@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>578080E0-C48B-4414-8C01-DB8D5B83A6D2</string>
+	<key>IDESourceControlProjectName</key>
+	<string>CJAudioPlayerExample</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>049C1265-762B-4200-923F-272D7702CD7B</key>
+		<string>ssh://github.com/cjlucas/CJAudioPlayer.git</string>
+		<key>E7FBB4A7-002E-4D77-ACCE-A10E3BBD5993</key>
+		<string>https://github.com/tumtumtum/audjustable.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CJAudioPlayerExample/CJAudioPlayerExample.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>049C1265-762B-4200-923F-272D7702CD7B</key>
+		<string>../../..</string>
+		<key>E7FBB4A7-002E-4D77-ACCE-A10E3BBD5993</key>
+		<string>../../Vendor/audjustable</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/cjlucas/CJAudioPlayer.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>049C1265-762B-4200-923F-272D7702CD7B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E7FBB4A7-002E-4D77-ACCE-A10E3BBD5993</string>
+			<key>IDESourceControlWCCName</key>
+			<string>audjustable</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>049C1265-762B-4200-923F-272D7702CD7B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CJAudioPlayer</string>
+		</dict>
+	</array>
+</dict>
+</plist>

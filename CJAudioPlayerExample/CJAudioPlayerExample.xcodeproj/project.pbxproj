@@ -31,7 +31,8 @@
 		8340A4E917B34E000094B482 /* DataSourceWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A4E017B34E000094B482 /* DataSourceWrapper.m */; };
 		8340A4EA17B34E000094B482 /* HttpDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A4E217B34E000094B482 /* HttpDataSource.m */; };
 		8340A4EB17B34E000094B482 /* LocalFileDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340A4E417B34E000094B482 /* LocalFileDataSource.m */; };
-		83A810D017B825CA00BC0C65 /* CJQueueTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A810CF17B825CA00BC0C65 /* CJQueueTableViewController.m */; };
+		8384057617BC69770018DDB5 /* CJQueueTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8384057517BC69770018DDB5 /* CJQueueTableViewController.m */; };
+		8384057717BC69770018DDB5 /* CJQueueTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8384057517BC69770018DDB5 /* CJQueueTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,8 +84,8 @@
 		8340A4E217B34E000094B482 /* HttpDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpDataSource.m; sourceTree = "<group>"; };
 		8340A4E317B34E000094B482 /* LocalFileDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalFileDataSource.h; sourceTree = "<group>"; };
 		8340A4E417B34E000094B482 /* LocalFileDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalFileDataSource.m; sourceTree = "<group>"; };
-		83A810CE17B825CA00BC0C65 /* CJQueueTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJQueueTableViewController.h; sourceTree = "<group>"; };
-		83A810CF17B825CA00BC0C65 /* CJQueueTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJQueueTableViewController.m; sourceTree = "<group>"; };
+		8384057417BC69770018DDB5 /* CJQueueTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJQueueTableViewController.h; sourceTree = "<group>"; };
+		8384057517BC69770018DDB5 /* CJQueueTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJQueueTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +153,8 @@
 				8340A49D17B32D710094B482 /* Main.storyboard */,
 				8340A4C717B32E010094B482 /* CJAudioPlayerViewController.h */,
 				8340A4C817B32E010094B482 /* CJAudioPlayerViewController.m */,
+				8384057417BC69770018DDB5 /* CJQueueTableViewController.h */,
+				8384057517BC69770018DDB5 /* CJQueueTableViewController.m */,
 				8340A4CE17B34CC00094B482 /* CJQueueItem.h */,
 				8340A4CF17B34CC00094B482 /* CJQueueItem.m */,
 				8340A4A317B32D710094B482 /* Images.xcassets */,
@@ -177,8 +180,6 @@
 			children = (
 				8340A4C117B32DCF0094B482 /* CJAudioPlayer.h */,
 				8340A4C217B32DCF0094B482 /* CJAudioPlayer.m */,
-				83A810CE17B825CA00BC0C65 /* CJQueueTableViewController.h */,
-				83A810CF17B825CA00BC0C65 /* CJQueueTableViewController.m */,
 				8340A4C317B32DCF0094B482 /* CJHTTPCachedDataSource.h */,
 				8340A4C417B32DCF0094B482 /* CJHTTPCachedDataSource.m */,
 			);
@@ -317,7 +318,7 @@
 			files = (
 				8340A4E517B34E000094B482 /* AudioPlayer.m in Sources */,
 				8340A4EA17B34E000094B482 /* HttpDataSource.m in Sources */,
-				83A810D017B825CA00BC0C65 /* CJQueueTableViewController.m in Sources */,
+				8384057617BC69770018DDB5 /* CJQueueTableViewController.m in Sources */,
 				8340A4EB17B34E000094B482 /* LocalFileDataSource.m in Sources */,
 				8340A4E817B34E000094B482 /* DataSource.m in Sources */,
 				8340A4D217B34CD40094B482 /* CJAudioPlayer.m in Sources */,
@@ -336,6 +337,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8384057717BC69770018DDB5 /* CJQueueTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
