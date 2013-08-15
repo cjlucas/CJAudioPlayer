@@ -123,7 +123,7 @@
 }
 
 - (IBAction)toggleContinuousModeSwitchValueChanged:(id)sender {
-    self.audioPlayer.shuffleModeEnabled = self.toggleContinuousModeSwitch.on;
+    self.audioPlayer.continuousModeEnabled = self.toggleContinuousModeSwitch.on;
 
     // update ui in case play prev/next buttons changed
     [self updateInterfaceWithItem:self.audioPlayer.currentItem];

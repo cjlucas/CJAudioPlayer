@@ -22,7 +22,7 @@ Requirements
 ------------
 - [Audjustable](https://github.com/tumtumtum/audjustable) 0.0.6+
 - iOS 7.0+
-- OS X 10.8+
+- OS X 10.9+
 
 Contributing
 ------------

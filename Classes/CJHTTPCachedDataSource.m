@@ -15,7 +15,6 @@
 
 #define CJHTTPCachedDataSourceMaxAudioBufferSize (512 * 1024) // 512 KB
 #define CJHTTPCachedDataSourceMaxCacheBufferSize (1 * 1024 * 1024) // 1 MB
-#define CJHTTPCachedDataSourceLowAudioBufferThreshold (16 * 1024) // 16 KB (same as AudioPlayerDefaultReadBufferSize)
 
 #import "CJHTTPCachedDataSource.h"
 
@@ -26,7 +25,8 @@
 - (void)primeAudioBuffer;
 - (void)fillAudioBufferFromCache;
 //- (void)fillAudioBufferFromCacheWithNewAudioBuffer:(NSMutableData *)newAudioBuffer withOffset:(NSUInteger)offset withBytesLeft:(NSUInteger)bytesLeft;
-- (void)purgeCache;
+- (void)purgeCacheBuffer;
+- (void)purgeAudioBuffer;
 
 - (void)handleReceivedData:(NSData *)data; // controls where new data is written
 - (void)handleDownloadCompletion;
@@ -53,7 +53,6 @@
 @synthesize httpURL = _httpURL;
 @synthesize cacheURL = _cacheURL;
 @synthesize queueID = _queueID;
-@synthesize length = _length;
 @synthesize fullyCached = _fullyCached;
 
 #pragma mark - Lifecycle
@@ -100,6 +99,7 @@
     _currentAudioBufferRange = NSMakeRange(0, 0);
     _currentCacheBufferRange  = NSMakeRange(0, 0);
     _bufferPrimerQueue = dispatch_queue_create("com.chrisjlucas.cjaudioplayer.datasource.bufferprimer", DISPATCH_QUEUE_SERIAL);
+    _downloadDataQueue = dispatch_queue_create("com.chrisjlucas.cjaudioplayer.datasource.downloaddata", DISPATCH_QUEUE_SERIAL);
 
     _audioBuffer = [[NSMutableData alloc] initWithCapacity:CJHTTPCachedDataSourceMaxAudioBufferSize];
     _cacheBuffer = [[NSMutableData alloc] initWithCapacity:CJHTTPCachedDataSourceMaxCacheBufferSize];
@@ -214,10 +214,11 @@
 
 - (void)handleReceivedData:(NSData *)data
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+    dispatch_async(_downloadDataQueue, ^{
         @synchronized(self) {
 //            CJHTTPCachedDataSourceLog(@"handleReceivedData (count: %d)", data.length);
 //            CJHTTPCachedDataSourceLog(@"_currentCacheBufferRange: %@", NSStringFromRange(_currentCacheBufferRange));
+//            CJHTTPCachedDataSourceLog(@"%@", _fullyCached ? @"YES" : @"NO");
 
             if (_fullyCached)
                 return;
@@ -240,23 +241,33 @@
 
 - (void)handleDownloadCompletion
 {
-    @synchronized(self) {
-        CJHTTPCachedDataSourceLog(@"handleDownloadCompletion", nil);
-        [self writeDataToFile:_cacheBuffer purgeCache:YES];
+    dispatch_async(_downloadDataQueue, ^{
+        @synchronized(self) {
+            CJHTTPCachedDataSourceLog(@"handleDownloadCompletion", nil);
+            [self writeDataToFile:_cacheBuffer purgeCache:YES];
 
-        [self primeAudioBuffer];
-    }
+            [self primeAudioBuffer];
+        }
+    });
 }
 
-- (void)purgeCache
+- (void)purgeCacheBuffer
 {
     // remove written bytes
     [_cacheBuffer replaceBytesInRange:NSMakeRange(0, _cacheBuffer.length) withBytes:NULL length:0];
 
     // shift cache buffer location
     NSUInteger newLocation = _currentCacheBufferRange.location + _currentCacheBufferRange.length;
-    // reset range to reflect empty cache buffer
+
+    // reset range to reflect empty cache buffer}
     _currentCacheBufferRange = NSMakeRange(newLocation, 0);
+}
+
+- (void)purgeAudioBuffer
+{
+    [_audioBuffer replaceBytesInRange:NSMakeRange(0, _audioBuffer.length) withBytes:NULL length:0];
+
+    _currentAudioBufferRange = NSMakeRange(0, 0);
 }
 
 #pragma mark - File Cache Methods
@@ -301,7 +312,7 @@
     [fp closeFile];
 
     if (purgeCache)
-        [self purgeCache];
+        [self purgeCacheBuffer];
 
     if (_finalCacheSize > 0 && _currentCacheBufferRange.location == _finalCacheSize) {
         _fullyCached = YES;
@@ -341,6 +352,7 @@
 
 - (void)close
 {
+    CJHTTPCachedDataSourceLog(@"close", nil);
     [self teardown];
 }
 
@@ -359,6 +371,10 @@
 
         // use min in case buffer size is smaller than the size requested
         NSUInteger bytesRead = MIN(_currentAudioBufferRange.length, size);
+
+        if (bytesRead == 0) {
+            CJHTTPCachedDataSourceLog(@"WARNING: bytesRead was zero", nil);
+        }
 
         // remove bytes from internal buffer that just copied to audio player buffer
         [_audioBuffer replaceBytesInRange:NSMakeRange(0, bytesRead) withBytes:NULL length:0];
@@ -406,12 +422,21 @@
     return _currentAudioBufferRange.location;
 }
 
+- (long long)length
+{
+    return _finalCacheSize;
+}
+
 - (void)seekToOffset:(long long)offset
 {
     CJHTTPCachedDataSourceLog(@"seekToOffset: %lld", offset);
-    _hasSeeked = YES;
+    _hasSeeked = offset > 0; // AudioPlayer will sometimes seek to zero before playing, don't consider that as having seeked
 
-    //_currentAudioBufferRange.location = offset; // don't use this in production yet
+    [self purgeAudioBuffer];
+
+    _currentAudioBufferRange.location = offset;
+
+    [self primeAudioBuffer];
 
     // if fully cached, just prime buffer at new offset
     // otherwise, we have to make a new http request with the range selected and invalidate the current cache
@@ -426,6 +451,7 @@
 {
     CJHTTPCachedDataSourceLog(@"registerForEvents", nil);
     [self startBuffering];
+    
     return NO;
 }
 
@@ -449,7 +475,7 @@
         [self createCacheFile];
     }
 
-    _length = response.expectedContentLength;
+    _finalCacheSize = response.expectedContentLength;
 
     completionHandler(disposition);
 }
@@ -467,7 +493,6 @@
     if ([self.infoDelegate respondsToSelector:@selector(dataSource:didUpdateDownloadProgressWithBytesDownloaded:bytesExpected:)]) {
         [self.infoDelegate dataSource:self didUpdateDownloadProgressWithBytesDownloaded:_totalBytesDownloaded bytesExpected:dataTask.countOfBytesExpectedToReceive];
     }
-
     [self handleReceivedData:data];
     [self primeAudioBuffer];
 }

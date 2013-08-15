@@ -29,7 +29,8 @@
     NSRange _currentAudioBufferRange;
     NSRange _currentCacheBufferRange;
 
-    dispatch_queue_t _bufferPrimerQueue;
+    dispatch_queue_t _bufferPrimerQueue; // TODO: rename these
+    dispatch_queue_t _downloadDataQueue;
 
     BOOL _hasSeeked;
     BOOL _dataSourceEOF;
