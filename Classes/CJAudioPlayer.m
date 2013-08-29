@@ -171,6 +171,7 @@ NSString * NSStringFromAudioPlayerErrorCode(AudioPlayerErrorCode code)
 - (void)activateAudioSession;
 - (void)deactivateAudioSession;
 - (void)handleAudioSessionInterruption:(NSNotification *)notification;
+- (void)handleAudioSessionRouteChange:(NSNotification *)notification;
 
 - (id <CJAudioPlayerQueueItem>)getNextItem; // returns nil if no next item
 - (id <CJAudioPlayerQueueItem>)getPreviousItem; // returns nil if no previous item
@@ -506,6 +507,7 @@ NSString * NSStringFromAudioPlayerErrorCode(AudioPlayerErrorCode code)
         CJAudioPlayerLog(@"%@", error);
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAudioSessionInterruption:) name:@"AVAudioSessionInterruptionNotification" object:as];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAudioSessionRouteChange:) name:@"AVAudioSessionRouteChangeNotification" object:as];
 }
 
 - (void)deactivateAudioSession
@@ -517,11 +519,12 @@ NSString * NSStringFromAudioPlayerErrorCode(AudioPlayerErrorCode code)
 
 - (void)handleAudioSessionInterruption:(NSNotification *)notification
 {
+    CJAudioPlayerLog(@"%@", notification);
     if (![notification.name isEqualToString:@"AVAudioSessionInterruptionNotification"]) {
         return;
     }
 
-    NSUInteger interruptionType = [((NSNumber *)notification.userInfo[AVAudioSessionInterruptionTypeKey]) intValue];
+    AVAudioSessionInterruptionType interruptionType = [(NSNumber *)notification.userInfo[AVAudioSessionInterruptionTypeKey] intValue];
 
     switch (interruptionType) {
         case AVAudioSessionInterruptionTypeBegan:
@@ -531,6 +534,22 @@ NSString * NSStringFromAudioPlayerErrorCode(AudioPlayerErrorCode code)
             [self play];
             break;
 
+        default:
+            break;
+    }
+}
+
+- (void)handleAudioSessionRouteChange:(NSNotification *)notification
+{
+    CJAudioPlayerLog(@"%@", notification);
+
+    AVAudioSessionRouteChangeReason reason = [(NSNumber *)notification.userInfo[AVAudioSessionRouteChangeReasonKey] intValue];
+
+    // if old device becomes unavailable (i.e. the headphones were unplugged), pause the track (this is standard behavior)
+    switch (reason) {
+        case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
+            [self pause];
+            break;
         default:
             break;
     }
