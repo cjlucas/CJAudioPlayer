@@ -67,7 +67,7 @@
         _usingTemporaryCacheFile = !cacheURL;
 
         NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:_httpURL];
-        req.timeoutInterval = 30;
+        req.timeoutInterval = 60;
         self.urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
         self.dataTask = [self.urlSession dataTaskWithRequest:req];
 
